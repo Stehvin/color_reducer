@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 '''
+Testing again
 Load image
 
 Convert image to RGB matrix (3D or 4D)
