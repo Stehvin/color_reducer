@@ -4,7 +4,7 @@ import scipy as sp
 import numpy as np
 from random import sample
 
-pdb.set_trace()
+
 # set file path for image
 picFile = r"C:\Users\Stehvin\Pictures\Chicago.jpg"
 
@@ -43,8 +43,6 @@ def randomCen(matrix2D, k):
         centroids[i,:] = matrix2D[randIndicies[i],:]
     return centroids
 
-# point/cluster assignment function
-
 def closestCen(matrix2D, centroids):
     """Assign every pixel in matrix2D to its closest centroid.
     
@@ -64,22 +62,24 @@ def closestCen(matrix2D, centroids):
         The total cost (distance squared) of current centroid 
         assignments.
     """
+    # initialize variables    
     m = matrix2D.shape[0]
     k = centroids.shape[0]    
     distMatrix = np.zeros([m, k])
     indicies = np.zeros([m, 1])
     
-    # loop over centroids (k)
+    # loop over centroids
     for i in range(k):
+        
+        # find distance from every pixel to centroid
         diffMatrix = matrix2D - centroids[i, :]
         distMatrix[:, i] = np.sum(diffMatrix**2, axis=1)
     
+    # save each pixel's closest centroid in indicies vector
     indicies = np.argmin(distMatrix, axis=1)
     cost = (1 / m) * np.sum(np.min(distMatrix, axis=1))
-    
     return indicies, cost
 
-        
 # move centroids function
 '''
 def moveCen(assignedPoints, centroids):
@@ -105,4 +105,10 @@ for i in range(numRuns):
 '''
 
 # convert array back into image, then output
+
+pdb.set_trace()
+matrix2D = imageToMatrix(picFile)
+centroids = randomCen(matrix2D, k)
+indicies, cost = closestCen(matrix2D, centroids)
+
 
