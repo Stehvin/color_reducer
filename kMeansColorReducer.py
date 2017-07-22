@@ -14,7 +14,7 @@ maxIter = 20
 numRuns = 50
 
 def imageToMatrix(imageFilePath):
-    """Convert an image into an n x 3 matrix, where n is the total
+    """Convert an image into an m x 3 matrix, where m is the total
     number of pixels in the image, and the 3 columns represent each
     pixel's RGB values.
     """
@@ -44,10 +44,41 @@ def randomCen(matrix2D, k):
     return centroids
 
 # point/cluster assignment function
-'''
-def closestCen(pictureArray, centroids):
-    return assignedPoints
-'''
+
+def closestCen(matrix2D, centroids):
+    """Assign every pixel in matrix2D to its closest centroid.
+    
+    Parameters
+    ---------
+    matrix2D: numpy array
+        2D matrix (m x 3) representing a picture.
+    centroids: numpy array
+        2D matrix (k x 3) representing centroid locations.
+        
+    Returns
+    ---------
+    indicies: numpy array
+        Vector (m x 1) representing which centroid is closest
+        to each pixel.
+    cost: float
+        The total cost (distance squared) of current centroid 
+        assignments.
+    """
+    m = matrix2D.shape[0]
+    k = centroids.shape[0]    
+    distMatrix = np.zeros([m, k])
+    indicies = np.zeros([m, 1])
+    
+    # loop over centroids (k)
+    for i in range(k):
+        diffMatrix = matrix2D - centroids[i, :]
+        distMatrix[:, i] = np.sum(diffMatrix**2, axis=1)
+    
+    indicies = np.argmin(distMatrix, axis=1)
+    cost = (1 / m) * np.sum(np.min(distMatrix, axis=1))
+    
+    return indicies, cost
+
         
 # move centroids function
 '''
