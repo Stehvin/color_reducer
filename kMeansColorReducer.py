@@ -81,10 +81,31 @@ def closestCen(matrix2D, centroids):
     return indicies, cost
 
 # move centroids function
-'''
-def moveCen(assignedPoints, centroids):
+def moveCen(matrix2D, indicies, k):
+    """Move each centroid to the average value of all pixels 
+    assigned to the centroid.
+    """
+    # initialize centroid matrix
+    centroids = np.zeros([k, 3])
+    
+    # get total number of pixels assigned to each centroid
+    cenCount = np.bincount(indicies)
+    
+    # loop over centroids
+    for i in range(k):
+        
+        # create boolean array showing which pixels are
+        # assigned to the ith centroid (m x 1)
+        boolVec = np.array([indicies == i]).T
+        
+        # broadcast multiply matrix2D and boolVec to remove all
+        # pixels not assigned to this function
+        centroidPixels = matrix2D * boolVec
+        centroids[i, :] = \
+            np.sum(centroidPixels, axis=0) / cenCount[i]
+    
     return centroids
-'''
+
 
 # function to run K-Means
 '''
@@ -106,9 +127,11 @@ for i in range(numRuns):
 
 # convert array back into image, then output
 
-pdb.set_trace()
+#pdb.set_trace()
 matrix2D = imageToMatrix(picFile)
 centroids = randomCen(matrix2D, k)
 indicies, cost = closestCen(matrix2D, centroids)
+newCen = moveCen(matrix2D, indicies, k)
+print(newCen)
 
 
