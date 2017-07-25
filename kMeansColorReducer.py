@@ -80,7 +80,6 @@ def closestCen(matrix2D, centroids):
     cost = (1 / m) * np.sum(np.min(distMatrix, axis=1))
     return indicies, cost
 
-# move centroids function
 def moveCen(matrix2D, indicies, k):
     """Move each centroid to the average value of all pixels 
     assigned to the centroid.
@@ -108,10 +107,19 @@ def moveCen(matrix2D, indicies, k):
 
 
 # function to run K-Means
-'''
-def runKMeans(pictureArray, centroids, maxIter)
+def runKMeans(matrix2D, k, maxIter):
+    """Run K-Means algorithm "maxIter" number of times.
+    The centroids will be updated "maxIter" times.
+    """
+    # randomly generate initial centroids    
+    centroids = randomCen(matrix2D, k)
+    
+    # run K-means algorithm    
+    for i in range(maxIter):
+        indicies, cost = closestCen(matrix2D, centroids)
+        centroids = moveCen(matrix2D, indicies, k)
+        print(cost)
     return centroids, cost
-'''
 
 # run K-Means numRuns times
 '''
@@ -129,9 +137,6 @@ for i in range(numRuns):
 
 #pdb.set_trace()
 matrix2D = imageToMatrix(picFile)
-centroids = randomCen(matrix2D, k)
-indicies, cost = closestCen(matrix2D, centroids)
-newCen = moveCen(matrix2D, indicies, k)
-print(newCen)
+centroids, cost = runKMeans(matrix2D, k, maxIter)
 
 
