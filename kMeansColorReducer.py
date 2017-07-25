@@ -3,6 +3,7 @@ import pdb
 import scipy as sp
 import numpy as np
 from random import sample
+import math
 
 
 # set file path for image
@@ -10,8 +11,8 @@ picFile = r"C:\Users\Stehvin\Pictures\Chicago.jpg"
 
 # choose K (num colors), max centroid iterations, and number of runs
 k = 3
-maxIter = 20
-numRuns = 50
+maxIter = 10
+numRuns = 4
 
 def imageToMatrix(imageFilePath):
     """Convert an image into an m x 3 matrix, where m is the total
@@ -108,7 +109,7 @@ def moveCen(matrix2D, indicies, k):
 
 # function to run K-Means
 def runKMeans(matrix2D, k, maxIter):
-    """Run K-Means algorithm "maxIter" number of times.
+    """Runs K-Means algorithm.
     The centroids will be updated "maxIter" times.
     """
     # randomly generate initial centroids    
@@ -118,25 +119,30 @@ def runKMeans(matrix2D, k, maxIter):
     for i in range(maxIter):
         indicies, cost = closestCen(matrix2D, centroids)
         centroids = moveCen(matrix2D, indicies, k)
-        print(cost)
     return centroids, cost
 
-# run K-Means numRuns times
-'''
-for i in range(numRuns):
-    centroids = randomCen(pictureArray)
-    centroids, cost = runKMeans(pictureArray, centroids, maxIter)
+def execute(matrix2D, k, maxIter, numRuns):
+    """Runs the whole K-means algorithm "numRuns" number of times.
+    The centroids with the lowest cost will be chosen as the final
+    centroids, and each pixel will be assigned to its closest
+    final centroid.
+    """
+    # initialize lowcost to infinity
+    lowcost = math.inf
     
-    if cost < smallcost:
-        bestCen = centroids
-        bestPoints = closestCen(pictureArray, bestCen)
-
-'''
+    for i in range(numRuns):
+        centroids, cost = runKMeans(matrix2D, k, maxIter)
+        if cost < lowcost:
+            bestCen = centroids
+    
+    bestIndicies = closestCen(matrix2D, bestCen)[0]
+    return bestCen[bestIndicies, :]
 
 # convert array back into image, then output
 
 #pdb.set_trace()
 matrix2D = imageToMatrix(picFile)
-centroids, cost = runKMeans(matrix2D, k, maxIter)
+what = execute(matrix2D, k, maxIter, numRuns)
+print(what)
 
 
