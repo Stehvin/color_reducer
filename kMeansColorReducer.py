@@ -5,14 +5,25 @@ import numpy as np
 from random import sample
 import math
 
-
-# set file path for image
-picFile = r"C:\Users\Stehvin\Pictures\Chicago.jpg"
-
-# choose K (num colors), max centroid iterations, and number of runs
-k = 3
-maxIter = 10
-numRuns = 4
+def main():
+    # set input and output file paths for image
+    inputFile = r"C:\Users\Stehvin\Pictures\casey cody.jpg"
+    outputFile = r"C:\Users\Stehvin\Pictures\kMeans\caseyCody10k.jpg"
+    
+    # choose K (num colors), max centroid iterations, and number of runs
+    k = 10
+    maxIter = 10
+    numRuns = 10
+    
+    # create 2D picture matrix
+    matrix2D = imageToMatrix(inputFile)
+    
+    # run K-means to assign every pixel to one of "k" colors
+    kColorsMatrix = execute(matrix2D, k, maxIter, numRuns)
+    
+    # convert pixel matrix back into image, then output
+    img = kColorsMatrix.reshape(sp.misc.imread(inputFile).shape)
+    sp.misc.imsave(outputFile, img)
 
 def imageToMatrix(imageFilePath):
     """Convert an image into an m x 3 matrix, where m is the total
@@ -20,7 +31,7 @@ def imageToMatrix(imageFilePath):
     pixel's RGB values.
     """
     # load image as matrix
-    picMatrix = sp.misc.imread(picFile)
+    picMatrix = sp.misc.imread(imageFilePath)
 
     # change picture matrix from 3D to 2D
     # (pixels are rows, RGB values are columns)
@@ -130,19 +141,16 @@ def execute(matrix2D, k, maxIter, numRuns):
     # initialize lowcost to infinity
     lowcost = math.inf
     
+    # find the centroids with the lowest cost
     for i in range(numRuns):
+        print("Run " + str(i + 1) + " of " + str(numRuns))
         centroids, cost = runKMeans(matrix2D, k, maxIter)
         if cost < lowcost:
             bestCen = centroids
     
+    # assign each pixel the RGB values of its closest centroid
     bestIndicies = closestCen(matrix2D, bestCen)[0]
     return bestCen[bestIndicies, :]
 
-# convert array back into image, then output
-
-#pdb.set_trace()
-matrix2D = imageToMatrix(picFile)
-what = execute(matrix2D, k, maxIter, numRuns)
-print(what)
-
-
+if __name__ == "__main__":
+    main()
