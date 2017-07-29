@@ -2,12 +2,12 @@
 
 import numpy as np
 import scipy as sp
-import sklearn
+from sklearn.cluster import KMeans
 
 def main():
     # set input and output file paths for image
     inputFile = r"C:\Users\Stehvin\Pictures\casey cody.jpg"
-    outputFile = r"C:\Users\Stehvin\Pictures\kMeans\caseyCody10k.jpg"
+    outputFile = r"C:\Users\Stehvin\Pictures\kMeans\testsk1.jpg"
     
     # choose K (num colors), max centroid iterations, and number of runs
     k = 10
@@ -17,10 +17,14 @@ def main():
     # create 2D picture matrix
     matrix2D = imageToMatrix(inputFile)
     
-    # run K-means to assign every pixel to one of "k" colors
-    kColorsMatrix = execute(matrix2D, k, maxIter, numRuns)
+    # run K-means
+    kMeans = KMeans(n_clusters=k, n_init=numRuns, max_iter=maxIter)
+    kMeans.fit(matrix2D)
+    centroids = kMeans.cluster_centers_
+    indicies = kMeans.labels_
     
     # assign each pixel to its closest centroid
+    kColorsMatrix = centroids[indicies, :]
     
     # convert pixel matrix back into image, then save to output file
     img = kColorsMatrix.reshape(sp.misc.imread(inputFile).shape)
