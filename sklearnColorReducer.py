@@ -7,7 +7,7 @@ from sklearn.cluster import KMeans
 def main():
     # set input and output file paths for image
     inputFile = r"C:\Users\Stehvin\Pictures\casey cody.jpg"
-    outputFile = r"C:\Users\Stehvin\Pictures\kMeans\testsk1.jpg"
+    outputFile = r"C:\Users\Stehvin\Pictures\kMeans\testsk10.jpg"
     
     # choose K (num colors), max centroid iterations, and number of runs
     k = 10
