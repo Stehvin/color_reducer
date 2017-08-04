@@ -36,6 +36,13 @@ def saveAsButton():
     else:
         outFile.insert(0, outputFile + ".jpg")                                                   
                                         
+def executeButton(inputFile, outputFile, k):
+    # to do
+    print(inputFile)
+    print(outputFile)
+    print(k)
+    return None
+    
 # set up input file location text entry and "Browse" button
 inFile = Entry(mainWin)
 inFile.config(width=50)
@@ -57,5 +64,12 @@ kEntry = Entry(mainWin)
 kEntry.config(width=5)
 Label(mainWin, text="Number of Colors:").grid(row=8, column=0, sticky=E)
 kEntry.grid(row=8, column=1, sticky=W)
+
+# set up k-means execute button
+button3 = Button(text="Get Color-Limited Sketch",
+                 command=lambda: executeButton(inFile.get(), 
+                                               outFile.get(), 
+                                               kEntry.get())). \
+                 grid(row=11, column=1)
     
 mainWin.mainloop()
