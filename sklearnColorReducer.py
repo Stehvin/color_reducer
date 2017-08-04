@@ -4,13 +4,8 @@ import numpy as np
 import scipy as sp
 from sklearn.cluster import KMeans
 
-def main():
-    # set input and output file paths for image
-    inputFile = r"C:\Users\Stehvin\Pictures\casey cody.jpg"
-    outputFile = r"C:\Users\Stehvin\Pictures\kMeans\testsk10.jpg"
-    
-    # choose K (num colors), max centroid iterations, and number of runs
-    k = 10
+def execute(inputFile, outputFile, k):   
+    # choose max centroid iterations and number of runs
     maxIter = 10
     numRuns = 10
     
