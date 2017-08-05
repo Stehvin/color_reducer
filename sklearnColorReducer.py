@@ -37,6 +37,3 @@ def imageToMatrix(imageFilePath):
     # (pixels are rows, RGB values are columns)
     matrix2D = np.reshape(picMatrix, (-1, picMatrix.shape[-1]))
     return matrix2D
-    
-if __name__ == "__main__":
-    main()
