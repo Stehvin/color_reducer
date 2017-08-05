@@ -30,12 +30,14 @@ def saveAsButton():
     if outputFile[-4:] == ".jpg":
         outFile.insert(0, outputFile)
     else:
-        outFile.insert(0, outputFile + ".jpg")                                                   
+        outFile.insert(0, outputFile + ".jpg")
                                         
 def executeButton(inputFile, outputFile, k):
+    """Executes K-Means program from sklearnColorReducer module. Informs
+    user when complete.
+    """
     kMeans.execute(inputFile,outputFile, k)
     Label(mainWin, text="Color Reduction Complete").grid(row=14, column=1)
-    return None
 
 # set up main GUI window
 mainWin = Tk()
