@@ -43,13 +43,15 @@ mainWin.title("Color-Limited Sketch")
 mainWin.geometry("900x550")
 
 # set up input file location text entry and "Browse" button
+Label(mainWin, text="").grid(row=0)
 inFile = Entry(mainWin)
 inFile.config(width=50)
-Label(mainWin, text="Input File Location:").grid(row=0, column=0, sticky=E)
-inFile.grid(row=0, column=1, sticky=W)
-button1 = Button(text="Browse", command=browseButton).grid(row=1, column=1)
+Label(mainWin, text="Input File Location:").grid(row=1, column=0, sticky=E)
+inFile.grid(row=1, column=1, sticky=W)
+button1 = Button(text="Browse", command=browseButton).grid(row=2, column=1)
 
 # set up output file location/name text entry and "Save As" button
+Label(mainWin, text="").grid(row=3)
 outFile = Entry(mainWin)
 outFile.config(width=50)
 Label(mainWin, text="Output File Location/Name:").grid(row=4, column=0,
@@ -59,16 +61,18 @@ button2 = Button(text="Save As",
                  command=saveAsButton).grid(row=5, column=1)
 
 # set up number of colors text entry
+Label(mainWin, text="").grid(row=6)
 kEntry = Entry(mainWin)
 kEntry.config(width=5)
-Label(mainWin, text="Number of Colors:").grid(row=8, column=0, sticky=E)
-kEntry.grid(row=8, column=1, sticky=W)
+Label(mainWin, text="Number of Colors:").grid(row=7, column=0, sticky=E)
+kEntry.grid(row=7, column=1, sticky=W)
 
 # set up k-means execute button
+Label(mainWin, text="").grid(row=8)
 button3 = Button(text="Get Color-Limited Sketch",
                  command=lambda: executeButton(inFile.get(), 
                                                outFile.get(), 
                                                int(kEntry.get()))). \
-                 grid(row=11, column=1)
+                 grid(row=9, column=1)
 
 mainWin.mainloop()
