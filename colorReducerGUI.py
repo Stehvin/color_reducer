@@ -3,6 +3,8 @@
 from tkinter import *
 from PIL import ImageTk, Image
 import sklearnColorReducer as kMeans
+import os.path
+import imghdr
 
 def browseButton():
     """Allows user to browse their files and select a .jpg or
@@ -36,6 +38,14 @@ def executeButton(inputFile, outputFile, k):
     """Executes K-Means program from sklearnColorReducer module. Informs
     user when complete.
     """
+    # check if input path exists and is a picture
+    if not os.path.exists(inputFile) or \
+       not imghdr.what(inputFile) in ('jpeg', 'png'):
+        Label(mainWin, text="Failed to load input picture."). \
+            grid(row=14, column=1)
+        return None
+    
+    # run k-means
     kMeans.execute(inputFile,outputFile, k)
     Label(mainWin, text="Color Reduction Complete").grid(row=14, column=1)
 
