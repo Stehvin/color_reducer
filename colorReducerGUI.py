@@ -55,6 +55,10 @@ def executeButton(inputFile, outputFile, k):
             grid(row=14, column=1)
         return None
     
+    # ensure output file has a .jpg or .png file format
+    if not outputFile[-4:] in (".jpg", ".png"):
+        outputFile += ".jpg"
+    
     # run k-means
     kMeans.execute(inputFile,outputFile, k)
     Label(mainWin, text="Color Reduction Complete").grid(row=14, column=1)
