@@ -5,6 +5,7 @@ from PIL import ImageTk, Image
 import sklearnColorReducer as kMeans
 import os.path
 import imghdr
+import tempfile
 
 def browseButton():
     """Allows user to browse their files and select a .jpg or
@@ -42,6 +43,15 @@ def executeButton(inputFile, outputFile, k):
     if not os.path.exists(inputFile) or \
        not imghdr.what(inputFile) in ('jpeg', 'png'):
         Label(mainWin, text="Failed to load input picture."). \
+            grid(row=14, column=1)
+        return None
+    
+    # use temporary file to check if output location is valid
+    outPath, outFilename = os.path.split(outputFile)
+    try:
+        outTestFile = tempfile.TemporaryFile(dir=outPath)
+    except:
+        Label(mainWin, text="Output folder not found."). \
             grid(row=14, column=1)
         return None
     
