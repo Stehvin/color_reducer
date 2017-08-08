@@ -42,8 +42,7 @@ def executeButton(inputFile, outputFile, k):
     # check if input path exists and is a picture
     if not os.path.exists(inputFile) or \
        not imghdr.what(inputFile) in ('jpeg', 'png'):
-        Label(mainWin, text="Failed to load input picture."). \
-            grid(row=14, column=1)
+        statusLabel.config(text="Failed to load input picture.")
         return None
     
     # use temporary file to check if output location is valid
@@ -52,8 +51,7 @@ def executeButton(inputFile, outputFile, k):
         outTestFile = tempfile.TemporaryFile(dir=outPath)
         outTestFile.close()
     except:
-        Label(mainWin, text="Output folder not found."). \
-            grid(row=14, column=1)
+        statusLabel.config(text="Output folder not found.")
         return None
     
     # ensure output file has a .jpg or .png file format
@@ -62,7 +60,7 @@ def executeButton(inputFile, outputFile, k):
     
     # run k-means
     kMeans.execute(inputFile,outputFile, k)
-    Label(mainWin, text="Color Reduction Complete").grid(row=14, column=1)
+    statusLabel.config(text="Color reduction complete.")
 
 # set up main GUI window
 mainWin = Tk()
@@ -101,5 +99,7 @@ button3 = Button(text="Get Color-Limited Sketch",
                                                outFile.get(), 
                                                int(kEntry.get()))). \
                  grid(row=9, column=1)
+statusLabel = Label(mainWin, text="")
+statusLabel.grid(row=10, column=1)
 
 mainWin.mainloop()
