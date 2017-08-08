@@ -50,6 +50,7 @@ def executeButton(inputFile, outputFile, k):
     outPath, outFilename = os.path.split(outputFile)
     try:
         outTestFile = tempfile.TemporaryFile(dir=outPath)
+        outTestFile.close()
     except:
         Label(mainWin, text="Output folder not found."). \
             grid(row=14, column=1)
