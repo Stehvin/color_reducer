@@ -71,6 +71,8 @@ def executeButton(inputFile, outputFile, k):
         return None
     
     # run k-means
+    statusLabel.config(text="Running color reduction algorithm...")
+    mainWin.update()
     kMeans.execute(inputFile,outputFile, k)
     statusLabel.config(text="Color reduction complete.")
 
