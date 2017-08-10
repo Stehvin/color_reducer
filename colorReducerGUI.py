@@ -58,6 +58,15 @@ def executeButton(inputFile, outputFile, k):
         statusLabel.config(text="Output folder not found.")
         return None
     
+    # ensure output file will not overwrite existing file
+    if os.path.exists(outputFile):
+        statusLabel.config(text="Output file already exists. " + \
+                                "Cannot overwrite.")
+        return None
+        
+    # ensure output file can is a valid filename
+    # to do
+        
     # ensure output file has a .jpg or .png file format
     if not outputFile[-4:] in (".jpg", ".png"):
         outputFile += ".jpg"
