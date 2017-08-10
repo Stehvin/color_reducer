@@ -57,6 +57,18 @@ def executeButton(inputFile, outputFile, k):
     # ensure output file has a .jpg or .png file format
     if not outputFile[-4:] in (".jpg", ".png"):
         outputFile += ".jpg"
+        
+    # ensure number of colors is a positive integer
+    try:
+        k = int(k)
+        if k <= 0:
+            statusLabel.config(text="Number of colors must be " + \
+                                    "positive.")
+            return None
+    except:
+        statusLabel.config(text="Number of colors must be " + \
+                                "a positive integer.")
+        return None
     
     # run k-means
     kMeans.execute(inputFile,outputFile, k)
@@ -97,7 +109,7 @@ Label(mainWin, text="").grid(row=8)
 button3 = Button(text="Get Color-Limited Sketch",
                  command=lambda: executeButton(inFile.get(), 
                                                outFile.get(), 
-                                               int(kEntry.get()))). \
+                                               kEntry.get())). \
                  grid(row=9, column=1)
 statusLabel = Label(mainWin, text="")
 statusLabel.grid(row=10, column=1)
