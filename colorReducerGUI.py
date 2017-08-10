@@ -1,6 +1,7 @@
 # Author: Stehvin Olson
 
 from tkinter import *
+from tkinter import filedialog
 from PIL import ImageTk, Image
 import sklearnColorReducer as kMeans
 import os.path
@@ -47,6 +48,9 @@ def executeButton(inputFile, outputFile, k):
     
     # use temporary file to check if output location is valid
     outPath, outFilename = os.path.split(outputFile)
+    if outPath == "" or outPath == "/" or outPath == "\\":
+        statusLabel.config(text="Output file location not specified.")
+        return None
     try:
         outTestFile = tempfile.TemporaryFile(dir=outPath)
         outTestFile.close()
@@ -57,6 +61,10 @@ def executeButton(inputFile, outputFile, k):
     # ensure output file has a .jpg or .png file format
     if not outputFile[-4:] in (".jpg", ".png"):
         outputFile += ".jpg"
+    if outFilename in (".jpg", ".png"):
+        statusLabel.config(text="A girl has no name, " + \
+                                "but the output file must.")
+        return None
         
     # ensure number of colors is a positive integer
     try:
@@ -73,7 +81,7 @@ def executeButton(inputFile, outputFile, k):
     # run k-means
     statusLabel.config(text="Running color reduction algorithm...")
     mainWin.update()
-    kMeans.execute(inputFile,outputFile, k)
+    kMeans.execute(inputFile, outputFile, k)
     statusLabel.config(text="Color reduction complete.")
 
 # set up main GUI window
