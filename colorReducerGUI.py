@@ -65,8 +65,14 @@ def executeButton(inputFile, outputFile, k):
         return None
         
     # ensure output file can is a valid filename
-    # to do
-        
+    try:
+        chkValid = open(outputFile, 'w')
+        chkValid.close()
+        os.remove(outputFile)
+    except:
+        statusLabel.config(text="Invalid file format.")
+        return None
+
     # ensure output file has a .jpg or .png file format
     if not outputFile[-4:] in (".jpg", ".png"):
         outputFile += ".jpg"
@@ -90,13 +96,18 @@ def executeButton(inputFile, outputFile, k):
     # run k-means
     statusLabel.config(text="Running color reduction algorithm...")
     mainWin.update()
-    kMeans.execute(inputFile, outputFile, k)
+    try:
+        kMeans.execute(inputFile, outputFile, k)
+    except:
+        statusLabel.config(text="Unknown algorithm error.")
+        return None
     statusLabel.config(text="Color reduction complete.")
 
 # set up main GUI window
 mainWin = Tk()
+mainWin.wm_iconbitmap('blue.ico')
 mainWin.title("Color-Limited Sketch")
-mainWin.geometry("900x550")
+mainWin.geometry("600x280")
 
 # set up input file location text entry and "Browse" button
 Label(mainWin, text="").grid(row=0)
