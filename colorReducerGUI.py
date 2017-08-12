@@ -8,6 +8,18 @@ import os.path
 import imghdr
 import tempfile
 
+def centerWindow(width, height):
+    """Opens the main window in the center of the user's screen.
+    """
+    # screen dimensions
+    screenWidth = mainWin.winfo_screenwidth()
+    screenHeight = mainWin.winfo_screenheight()
+    
+    # calculate pixel offset (for top-left corner of window)
+    x = int((screenWidth/2) - (width/2))
+    y = int((screenHeight/2) - (height/2))
+    mainWin.geometry("{}x{}+{}+{}".format(width, height, x, y))
+
 def browseButton():
     """Allows user to browse their files and select a .jpg or
     .png picture.
@@ -107,7 +119,9 @@ def executeButton(inputFile, outputFile, k):
 mainWin = Tk()
 mainWin.wm_iconbitmap('blue.ico')
 mainWin.title("Color-Limited Sketch")
-mainWin.geometry("600x280")
+
+# configure window size and location on screen
+centerWindow(600, 280)
 
 # set up input file location text entry and "Browse" button
 Label(mainWin, text="").grid(row=0)
