@@ -117,7 +117,7 @@ def executeButton(inputFile, outputFile, k):
 
 # set up main GUI window
 mainWin = Tk()
-mainWin.wm_iconbitmap('blue.ico')
+#mainWin.wm_iconbitmap('blue.ico')
 mainWin.title("Color-Limited Sketch")
 
 # configure window size and location on screen
