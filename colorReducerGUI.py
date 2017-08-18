@@ -26,6 +26,7 @@ def browseButton():
     """
     inputFile = filedialog.askopenfilename(filetypes=[("Picture Files", 
                                                        "*.jpg;*.png")])  
+    inFile.delete(0, END)
     inFile.insert(0, inputFile)
     
     ''' These lines can be added if displaying the picture is desired.    
@@ -39,7 +40,7 @@ def saveAsButton():
     """
     outputFile = filedialog.asksaveasfilename(filetypes=[("Picture File", 
                                                        "*.jpg")])
-    outFile.delete(0, "end")
+    outFile.delete(0, END)
     
     # if user did not include ".jpg" to end of picture file name,
     # add it for them
