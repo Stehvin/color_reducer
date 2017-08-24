@@ -7,6 +7,8 @@ import sklearnColorReducer as kMeans
 import os.path
 import imghdr
 import tempfile
+from threading import Thread
+import time
 
 def centerWindow(width, height):
     """Opens the main window in the center of the user's screen.
@@ -106,16 +108,50 @@ def executeButton(inputFile, outputFile, k):
                                 "a positive integer.")
         return None
     
-    # run k-means
+    # begin running k-means
     statusLabel.config(text="Running color reduction algorithm...")
     mainWin.update()
-    try:
-        kMeans.execute(inputFile, outputFile, k)
-    except:
-        os.remove(outputFile)
+    
+    def threadKmeans(thread_check, inputFile, outputFile, k):
+        """Runs the K-Means algorithm on a different thread than
+        the main GUI window. Will change the value of thread_check
+        when complete.
+        """
+        try:
+            kMeans.execute(inputFile, outputFile, k)
+            thread_check['success'] = True
+        except:
+            os.remove(outputFile)
+            thread_check['success'] = False
+    
+    # initialize variables and start second thread to run algorithm       
+    thread_check = {'success': None}
+    dot = 0
+    Thread(target=threadKmeans, args=(thread_check, inputFile, 
+                             outputFile, k)).start()
+    
+    # wait for the second thread to finish running K-Means algorithm,
+    # change dots to show user algorithm is still running 
+    while thread_check['success'] == None:
+        if dot == 0:
+            statusLabel.config(text="Running color reduction algorithm")
+        elif dot == 1:
+            statusLabel.config(text="Running color reduction algorithm.")
+        elif dot == 2:
+            statusLabel.config(text="Running color reduction algorithm..")
+        elif dot == 3:
+            statusLabel.config(text="Running color reduction algorithm...")
+        time.sleep(0.5)
+        mainWin.update()
+        dot += 1
+        if dot == 4:
+            dot = 0
+    
+    # tell user whether or not algorithm completed successfully
+    if thread_check == False:
         statusLabel.config(text="Unknown algorithm error.")
-        return None
-    statusLabel.config(text="Color reduction complete.")
+    else:
+        statusLabel.config(text="Color reduction complete.")
 
 # set up main GUI window
 mainWin = Tk()
