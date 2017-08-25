@@ -27,7 +27,7 @@ def browseButton():
     .png picture.
     """
     inputFile = filedialog.askopenfilename(filetypes=[("Picture Files", 
-                                                       "*.jpg;*.png")])  
+                                                       "*.jpg")]) 
     inFile.delete(0, END)
     inFile.insert(0, inputFile)
     
@@ -55,11 +55,14 @@ def executeButton(inputFile, outputFile, k):
     """Executes K-Means program from sklearnColorReducer module. Informs
     user when complete.
     """
-    # check if input path exists and is a picture
-    if not os.path.exists(inputFile) or \
-       not imghdr.what(inputFile) in ('jpeg', 'png'):
-        statusLabel.config(text="Failed to load input picture.")
-        return None
+    # check if input path exists and is a JPEG
+    try:
+        if not os.path.exists(inputFile) or \
+           not Image.open(inputFile).format == 'JPEG':
+            statusLabel.config(text="Failed to load input picture.")
+            return None
+    finally:
+        Image.open(inputFile).close()
     
     # use temporary file to check if output location is valid
     outPath, outFilename = os.path.split(outputFile)
