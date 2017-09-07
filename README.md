@@ -4,4 +4,14 @@ This program intelligently reduces the number of colors in a JPEG image. Here, "
 # How it Works
 This is accomplished using a k-means clustering algorithm. All of the pixels in the original image have three parameters, their red, green, and blue (RGB) color values. When the user chooses *k* (the number of colors for the output image), *k* centroids are generated with random RGB values. The program then completes ten iterations through the k-means algorithm, where, in each iteration, all the pixels are assigned to their closest centroid, and then all of the centriods move to the average position of the pixels assigned to them. Once one "run" (ten iterations) of the k-means algorithm is complete, the program does nine more runs, generating new randomly-chosen centroids at the beginning of each run. The centroids with the lowest cost (determined by the sum of each pixel's distance from its centriod) are chosen as the colors for the final image. Finally, all pixels assigned to each centroid are given the RGB values of their centroid and outputted into the final picture.
 
-# How to Use
+# How to Use the GUI (Graphical User Interface)
+An executable version (.exe file) of this program can be downloaded at this [link](https://drive.google.com/open?id=0BwsPnrvZsDI-Z3pudjlOeERPNjQ). Running this .exe file will start the GUI. The user must input a file path to a JPEG image, the desired file path for the output image, and the number of colors they would like to use for the output image.
+
+Note: Due to the program's use of a k-means clustering algorithm, processing time will increase with the size of the image and the number of colors chosen. Users who are waiting for an excessive amount of time should try using a smaller picture or choosing a smaller number of colors.
+
+# Files in this Repository
+## sklearnColorReducer.py
+
+## colorReducerGUI.py
+
+## kMeansColorReducer.py
