@@ -1,2 +1,7 @@
-# color_reducer
-Reduces the number of different colors in a picture.
+# Color-Limited Sketch / JPEG Color Reducer
+This program intelligently reduces the number of colors in a JPEG image. Here, "intelligently" means the program considers all the colors in the original image and tries to choose output colors that are closest to those original colors. For example, say a picture of a lake surrounded by forest was input into the program, and the user wanted the output image to have only two colors. The program would likely choose blue and green as its two colors, since the lake portion of the image is dominated by blues and the forest portion is dominated by greens.
+
+# How it Works
+This is accomplished using a k-means clustering algorithm. All of the pixels in the original image have three parameters, their red, green, and blue (RGB) color values. When the user chooses *k* (the number of colors for the output image), *k* centroids are generated with random RGB values. The program then completes ten iterations through the k-means algorithm, where, in each iteration, all the pixels are assigned to their closest centroid, and then all of the centriods move to the average position of the pixels assigned to them. Once one "run" (ten iterations) of the k-means algorithm is complete, the program does nine more runs, generating new randomly-chosen centroids at the beginning of each run. The centroids with the lowest cost (determined by the sum of each pixel's distance from its centriod) are chosen as the colors for the final image. Finally, all pixels assigned to each centroid are given the RGB values of their centroid and outputted into the final picture.
+
+# How to Use
