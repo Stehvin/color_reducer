@@ -10,8 +10,11 @@ An executable version (.exe file) of this program can be downloaded at this [lin
 Note: Due to the program's use of a k-means clustering algorithm, processing time will increase with the size of the image and the number of colors chosen. Users who are waiting for an excessive amount of time should try using a smaller picture or choosing a smaller number of colors.
 
 # Files in this Repository
-## sklearnColorReducer.py
+### sklearnColorReducer.py
+Implementation of the k-means clustering algorithm, using the scikit-learn module. This implementation is significantly faster than the kMeansColorReducer.py implementation.
 
-## colorReducerGUI.py
+### colorReducerGUI.py
+Graphical user interface (GUI) for Color-Limited Sketch program. GUI can be opened by running the executable file linked above. Uses multi-threading to keep itself responsive while simultaneously running the k-means algorithm (via sklearnColorReducer.py).
 
-## kMeansColorReducer.py
+### kMeansColorReducer.py
+Implementation of the k-means clustering algorithm without using scikit-learn. This file was completed for fun and is not used in the executable version of this program.
